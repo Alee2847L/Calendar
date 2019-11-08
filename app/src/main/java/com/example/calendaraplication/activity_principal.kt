@@ -39,6 +39,9 @@ class activity_principal : AppCompatActivity() {
             selectImageInAlbum()
         }
 
+        imageView5.setOnClickListener{
+            askCameraPermission()
+        }
 
 
     }
