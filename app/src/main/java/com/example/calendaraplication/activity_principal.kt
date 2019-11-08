@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +41,7 @@ class activity_principal : AppCompatActivity() {
         }
 
         imageView5.setOnClickListener{
-            askCameraPermission()
+            takePhoto()
         }
 
 
@@ -55,18 +56,10 @@ class activity_principal : AppCompatActivity() {
         startActivityForResult(pickImageIntent, AppConstants.PICK_PHOTO_REQUEST)
     }
     private fun takePhoto() {
-        val values = ContentValues(1)
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-        fileUri = contentResolver
-            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                values)
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if(intent.resolveActivity(packageManager) != null) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            startActivityForResult(intent, AppConstants.TAKE_PHOTO_REQUEST)
-        }
+       var i=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(i, 123)
+
+
     }
 
     fun askCameraPermission(){
@@ -111,22 +104,16 @@ class activity_principal : AppCompatActivity() {
             }).check()
     }
 
-    //override function that is called once the photo has been taken
-    override fun onActivityResult(requestCode: Int, resultCode: Int,
-                                  data: Intent?) {
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == AppConstants.TAKE_PHOTO_REQUEST) {
-            //photo from camera
-            //display the photo on the imageview
-            imageView3.setImageURI(fileUri)
-        }else if(resultCode == Activity.RESULT_OK
-            && requestCode == AppConstants.PICK_PHOTO_REQUEST){
-            //photo from gallery
-            fileUri = data?.data
-            imageView3.setImageURI(fileUri)
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode==123)
+        {
+            var bmp=data.extras.get("data") as Bitmap
+            imageView3.setImageBitmap(bmp)
         }
     }
+
+
 
 }
