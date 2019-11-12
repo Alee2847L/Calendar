@@ -53,9 +53,6 @@ class activity_principal : AppCompatActivity() {
             selectImageInAlbum()
         }
 
-        imageView5.setOnClickListener{
-            takePhoto()
-        }
 
 
     }
@@ -130,9 +127,13 @@ class activity_principal : AppCompatActivity() {
         ) {
             //photo from gallery
             AppConstants.fileUri = data?.data
-            imageView3.setImageURI(AppConstants.fileUri)
+            //imageView3.setImageURI(AppConstants.fileUri)
             lista.add(AppConstants.fileUri.toString())
             mutableList.add(AppConstants.fileUri.toString())
+            if (mutableList[1] != null){
+                imageView3.setImageURI(AppConstants.fileUri)
+
+            }
             //--------------------------------------------------------------------
             //-------------------------------------------------------------------
             val recyclerView :RecyclerView=findViewById(R.id.recycleView)
@@ -146,7 +147,6 @@ class activity_principal : AppCompatActivity() {
             recyclerView.adapter=adapter
             //--------------------------------------------------------------------
             //-------------------------------------------------------------------
-            textView.setText(mutableList[1])
             editText.setText(mutableList.toString())
         } else {
             super.onActivityResult(requestCode, resultCode, data)
