@@ -43,20 +43,6 @@ class activity_principal : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
-
-        val recyclerView :RecyclerView=findViewById(R.id.recycleView)
-        recyclerView.layoutManager=LinearLayoutManager(this, android.widget.LinearLayout.VERTICAL,false)
-        val imgagenes=ArrayList<image>()
-
-
-        imgagenes.add(image(AppConstants.fileUri.toString()))
-
-        val adapter=Adapteriamge(imgagenes)
-        recyclerView.adapter=adapter
-
-
-
-
         imageView2.setOnClickListener{ val Intento1 =Intent(this, MainActivity::class.java)
             this.finish()
             startActivity(Intento1)
@@ -147,7 +133,19 @@ class activity_principal : AppCompatActivity() {
             imageView3.setImageURI(AppConstants.fileUri)
             lista.add(AppConstants.fileUri.toString())
             mutableList.add(AppConstants.fileUri.toString())
+            //--------------------------------------------------------------------
+            //-------------------------------------------------------------------
+            val recyclerView :RecyclerView=findViewById(R.id.recycleView)
+            recyclerView.layoutManager=LinearLayoutManager(this, android.widget.LinearLayout.VERTICAL,false)
+            val imgagenes=ArrayList<image>()
 
+
+            imgagenes.add(image(mutableList.last()))
+
+            val adapter=Adapteriamge(imgagenes)
+            recyclerView.adapter=adapter
+            //--------------------------------------------------------------------
+            //-------------------------------------------------------------------
             textView.setText(mutableList[1])
             editText.setText(mutableList.toString())
         } else {
