@@ -15,6 +15,9 @@ import android.provider.MediaStore
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.drawable.toIcon
+import androidx.core.net.toFile
+import androidx.core.view.updateLayoutParams
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -22,10 +25,12 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_principal.*
+import java.io.OutputStreamWriter
 import java.util.*
 
 class activity_principal : AppCompatActivity() {
     var fileUri: Uri? = null
+    val mutableList: MutableList<String> = mutableListOf(fileUri.toString())
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -104,16 +109,26 @@ class activity_principal : AppCompatActivity() {
             }).check()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode==123)
-        {
-            var bmp=data.extras.get("data") as Bitmap
-            imageView3.setImageBitmap(bmp)
+    override fun onActivityResult(requestCode: Int, resultCode: Int,
+                                  data: Intent?) {
+        if (resultCode == Activity.RESULT_OK
+            && requestCode == AppConstants.TAKE_PHOTO_REQUEST
+        ) {
+            //photo from camera
+            //display the photo on the imageview
+            imageView3.setImageURI(fileUri)
+        } else if (resultCode == Activity.RESULT_OK
+            && requestCode == AppConstants.PICK_PHOTO_REQUEST
+        ) {
+            //photo from gallery
+            fileUri = data?.data
+            imageView3.setImageURI(fileUri)
+            mutableList.add(fileUri.toString())
+            editText.setText(mutableList.toString())
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
 
 
 }
