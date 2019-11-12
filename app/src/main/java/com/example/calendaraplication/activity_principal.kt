@@ -12,6 +12,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Layout
 import android.widget.DatePicker
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -33,8 +34,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class activity_principal : AppCompatActivity() {
-    var fileUri: Uri? = null
-    val mutableList: MutableList<String> = mutableListOf(fileUri.toString())
+
+    val mutableList: MutableList<String> = mutableListOf(AppConstants.fileUri.toString())
     var lista = ArrayList<String>()
     var arrayList= ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +43,18 @@ class activity_principal : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
-        val recyclerView:RecyclerView=findViewById(R.id.recycleView)
-        recyclerView.layoutManager=LinearLayoutManager(this,LinearLayout.VERTICAL,false)
+
+        val recyclerView :RecyclerView=findViewById(R.id.recycleView)
+        recyclerView.layoutManager=LinearLayoutManager(this, android.widget.LinearLayout.VERTICAL,false)
+        val imgagenes=ArrayList<image>()
+
+
+        imgagenes.add(image(AppConstants.fileUri.toString()))
+
+        val adapter=Adapteriamge(imgagenes)
+        recyclerView.adapter=adapter
+
+
 
 
         imageView2.setOnClickListener{ val Intento1 =Intent(this, MainActivity::class.java)
@@ -54,12 +65,6 @@ class activity_principal : AppCompatActivity() {
 
         imageView4.setOnClickListener{
             selectImageInAlbum()
-            val imgagenes=ArrayList<image>()
-
-            imgagenes.add(image(lista.toString()))
-
-            val adapter=Adapteriamge(imgagenes)
-            recyclerView.adapter=adapter
         }
 
         imageView5.setOnClickListener{
@@ -133,18 +138,21 @@ class activity_principal : AppCompatActivity() {
         ) {
             //photo from camera
             //display the photo on the imageview
-            imageView3.setImageURI(fileUri)
+            imageView3.setImageURI(AppConstants.fileUri)
         } else if (resultCode == Activity.RESULT_OK
             && requestCode == AppConstants.PICK_PHOTO_REQUEST
         ) {
             //photo from gallery
-            fileUri = data?.data
-            //imageView3.setImageURI(fileUri)
-            lista.add(fileUri.toString())
-            mutableList.add(fileUri.toString())
+            AppConstants.fileUri = data?.data
+            imageView3.setImageURI(AppConstants.fileUri)
+            lista.add(AppConstants.fileUri.toString())
+            mutableList.add(AppConstants.fileUri.toString())
+
+            textView.setText(mutableList[1])
             editText.setText(mutableList.toString())
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+
     }
 }
