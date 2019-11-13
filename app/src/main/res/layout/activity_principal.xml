@@ -11,13 +11,13 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="56dp"
-        android:layout_height="50dp"
+        android:layout_width="64dp"
+        android:layout_height="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_lock_power_off" />
+        app:srcCompat="@drawable/user_clients_14956" />
 
     <ImageView
         android:id="@+id/imageView4"

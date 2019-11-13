@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 dateTv.setText("Correct password")
 
                  val Intento1 = Intent(this, activity_principal::class.java)
+
                  this.finish()
                     startActivity(Intento1)
 
