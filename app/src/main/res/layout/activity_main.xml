@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/android"
     tools:context=".MainActivity">
 
     <ImageView
@@ -22,7 +22,7 @@
         android:id="@+id/calendarView"
         android:layout_width="473dp"
         android:layout_height="494dp"
-        android:background="#201F1F"
+        android:accessibilityPaneTitle="#FFFFFF"
         android:theme="@android:style/Theme.Light"
         android:verticalScrollbarPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
