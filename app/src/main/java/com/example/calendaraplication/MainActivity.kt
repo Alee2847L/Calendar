@@ -4,9 +4,11 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_principal.*
+import kotlinx.android.synthetic.main.content_item.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,20 +28,30 @@ class MainActivity : AppCompatActivity() {
         val m=month
         val d=day
 
-        val mut : MutableList<String> = mutableListOf("3/11/2019 empleo")
+        val mut : MutableList<String> = mutableListOf("3/11/2019")
+
 
         dateTv.setText(""+ d +"/"+ m +"/"+ y)
 
-        calendarView.setOnDateChangeListener { view, year:Int, month:Int, dayOfMonth:Int -> editText2.setText(""+ dayOfMonth +"/"+ month +"/"+ year)
-            if(mut.contains(editText2.toString())){
-                editText2.setText(mut.contains(editText2.toString()).toString())
+        calendarView.setOnDateChangeListener { view, year:Int, month:Int, dayOfMonth:Int -> dateTv.setText(""+ dayOfMonth +"/"+ month +"/"+ year)
+            for(element in mut){
+                Log.d("mutable", element)
+                if(element.contains(dateTv.text)){
+                    //editText2.setText(mut.contains(editText2.toString()).toString())
+                    editText2.setText(element)
+                }else{
+                    editText2.setText(dateTv.text)
+                }
             }
           //  mut.add(dateTv.toString())
            // editText2.setText(mut.toString())
         }
 
+        var fecha: Date?=null
         imageView9.setOnClickListener{
-            mut.add(editText2.toString())
+
+            mut.add(editText2.text.toString())
+            editText2.setText(mut.toString())
         }
 
 
