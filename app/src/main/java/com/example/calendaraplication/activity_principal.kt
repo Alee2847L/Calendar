@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Layout
+import android.view.View
 import android.widget.DatePicker
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_principal.*
 import java.io.OutputStreamWriter
 import java.util.*
 import kotlin.collections.ArrayList
+import android.widget.Toolbar
 
 class activity_principal : AppCompatActivity() {
 
@@ -53,7 +56,9 @@ class activity_principal : AppCompatActivity() {
             selectImageInAlbum()
         }
 
-
+        //-----------------------------------------------------------------------------------
+        //image view full screen
+        //-----------------------------------------------------------------------------------
 
     }
 
