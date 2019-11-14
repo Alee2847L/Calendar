@@ -11,7 +11,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    val mutableList: MutableList<String> = mutableListOf(dateTv.toString())
+    //val mut : MutableList<String> = mutableListOf(dateTv.toString())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,11 +26,24 @@ class MainActivity : AppCompatActivity() {
         val m=month
         val d=day
 
+        val mut : MutableList<String> = mutableListOf("3/11/2019 empleo")
+
         dateTv.setText(""+ d +"/"+ m +"/"+ y)
 
-        calendarView.setOnDateChangeListener { view, year:Int, month:Int, dayOfMonth:Int -> dateTv.setText(""+ dayOfMonth +"/"+ month +"/"+ year) }
-        mutableList.add(dateTv.toString())
-        editText2.setText(mutableList.toString())
+        calendarView.setOnDateChangeListener { view, year:Int, month:Int, dayOfMonth:Int -> editText2.setText(""+ dayOfMonth +"/"+ month +"/"+ year)
+            if(mut.contains(editText2.toString())){
+                editText2.setText(mut.contains(editText2.toString()).toString())
+            }
+          //  mut.add(dateTv.toString())
+           // editText2.setText(mut.toString())
+        }
+
+        imageView9.setOnClickListener{
+            mut.add(editText2.toString())
+        }
+
+
+
         imageView.setOnClickListener{
 
             if(dateTv.text=="1/0/2020")

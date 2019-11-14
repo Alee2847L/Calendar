@@ -20,8 +20,8 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="450dp"
-        android:layout_height="350dp"
+        android:layout_width="358dp"
+        android:layout_height="341dp"
         android:accessibilityPaneTitle="6600CC"
         android:theme="@android:style/Theme.DeviceDefault.Dialog"
         android:verticalScrollbarPosition="right"
@@ -61,8 +61,8 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="379dp"
-        android:layout_height="116dp"
+        android:layout_width="342dp"
+        android:layout_height="112dp"
         android:layout_marginBottom="40dp"
         android:background="#FFFFFF"
         android:ems="10"
@@ -76,9 +76,9 @@
         android:id="@+id/textView"
         android:layout_width="91dp"
         android:layout_height="34dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="24dp"
         android:text="Notes:"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
