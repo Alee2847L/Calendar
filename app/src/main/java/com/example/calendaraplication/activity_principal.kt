@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_principal.*
+import kotlinx.android.synthetic.main.content_item.*
 import kotlin.collections.ArrayList
 
 class activity_principal : AppCompatActivity() {
@@ -28,9 +29,12 @@ class activity_principal : AppCompatActivity() {
             selectImageInAlbum()
         }
         //---------FULL SCREEN-------------------
-        //LinearLayout.setOnClickListener{ val Intent1 = Intent(this, content_Activity::class.java)
-        //    startActivity(Intent1)
-        //}comming soon
+        LinearLayout.setOnClickListener{ val Intent1 = Intent(this, content_Activity::class.java)
+            startActivity(Intent1)
+        }//comming soon
+        recycleView.setOnClickListener{ val Intent1 = Intent(this, content_Activity::class.java)
+            startActivity(Intent1)
+        }
     }
 
 
