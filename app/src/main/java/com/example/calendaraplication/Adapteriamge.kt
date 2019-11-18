@@ -13,7 +13,7 @@ class Adapteriamge(var list: ArrayList<image>) : RecyclerView.Adapter<Adapteriam
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v=LayoutInflater.from(parent?.context).inflate(R.layout.activity_content_,parent,false)
+        val v=LayoutInflater.from(parent.context).inflate(R.layout.activity_content_,parent,false)
         return ViewHolder(v)
     }
 

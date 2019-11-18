@@ -1,0 +1,48 @@
+private fun takePhoto() {
+       var i=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(i, 123)
+
+
+    }
+
+    fun askCameraPermission(){
+        Dexter.withActivity(this)
+            .withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ).withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {/* ... */
+                    if(report.areAllPermissionsGranted()){
+                        //once permissions are granted, launch the camera
+                        takePhoto()
+                    }else{
+                        Toast.makeText(this@activity_principal, "All permissions need to be granted to take photo", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+                override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest>, token: PermissionToken) {/* ... */
+                    //show alert dialog with permission options
+                    AlertDialog.Builder(this@activity_principal)
+                        .setTitle(
+                            "Permissions Error!")
+                        .setMessage(
+                            "Please allow permissions to take photo with camera")
+                        .setNegativeButton(
+                            android.R.string.cancel,
+                            { dialog, _ ->
+                                dialog.dismiss()
+                                token?.cancelPermissionRequest()
+                            })
+                        .setPositiveButton(android.R.string.ok,
+                            { dialog, _ ->
+                                dialog.dismiss()
+                                token?.continuePermissionRequest()
+                            })
+                        .setOnDismissListener({
+                            token?.cancelPermissionRequest() })
+                        .show()
+                }
+
+            }).check()
+    }
