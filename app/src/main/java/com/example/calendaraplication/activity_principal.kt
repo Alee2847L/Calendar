@@ -45,21 +45,19 @@ class activity_principal : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
-
+        //-----CLICK IN LOG OUT----------
         imageView2.setOnClickListener{ val Intento1 =Intent(this, MainActivity::class.java)
             this.finish()
             startActivity(Intento1)
-
         }
-
+        //------CLICK IN ADD IMAGE---------------
         imageView4.setOnClickListener{
             selectImageInAlbum()
         }
-
-        //-----------------------------------------------------------------------------------
-        //image view full screen
-        //-----------------------------------------------------------------------------------
-
+        //---------FULL SCREEN-------------------
+        //LinearLayout.setOnClickListener{ val Intent1 = Intent(this, content_Activity::class.java)
+        //    startActivity(Intent1)
+        //}
     }
 
 
@@ -122,12 +120,6 @@ class activity_principal : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int,
                                   data: Intent?) {
         if (resultCode == Activity.RESULT_OK
-            && requestCode == AppConstants.TAKE_PHOTO_REQUEST
-        ) {
-            //photo from camera
-            //display the photo on the imageview
-            imageView3.setImageURI(AppConstants.fileUri)
-        } else if (resultCode == Activity.RESULT_OK
             && requestCode == AppConstants.PICK_PHOTO_REQUEST
         ) {
             //photo from gallery
@@ -135,11 +127,8 @@ class activity_principal : AppCompatActivity() {
             //imageView3.setImageURI(AppConstants.fileUri)
             lista.add(AppConstants.fileUri.toString())
             mutableList.add(AppConstants.fileUri.toString())
-            if (mutableList[1] != null){
-                imageView3.setImageURI(AppConstants.fileUri)
-
-            }
             //--------------------------------------------------------------------
+            //------USE RECYCLE VIEW IN ACTIVITY PRINCIPAL-----------------------
             //-------------------------------------------------------------------
             val recyclerView :RecyclerView=findViewById(R.id.recycleView)
             recyclerView.layoutManager=LinearLayoutManager(this, android.widget.LinearLayout.VERTICAL,false)
