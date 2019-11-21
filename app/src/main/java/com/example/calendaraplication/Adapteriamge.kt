@@ -1,5 +1,6 @@
 package com.example.calendaraplication
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,25 +8,28 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class Adapteriamge(var list: ArrayList<image>) : RecyclerView.Adapter<Adapteriamge.ViewHolder>(){
+class Adapteriamge(var context:Context, var list: ArrayList<image>) : RecyclerView.Adapter<Adapteriamge.ViewHolder>(){
     override fun getItemCount(): Int {
-        return list.size
+        return list.count()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v=LayoutInflater.from(parent.context).inflate(R.layout.activity_content_,parent,false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): Adapteriamge.ViewHolder {
+        val view=LayoutInflater.from(context).inflate(R.layout.activity_content_, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(list[position])
+    override fun onBindViewHolder(holder: Adapteriamge.ViewHolder, position: Int) {
+        val item= list.get(position)
+
+        holder.foto.setImageURI(AppConstants.fileUri)
     }
 
-    class ViewHolder (view: View): RecyclerView.ViewHolder(view){
-        fun bindItems(data:image){
-            val img:ImageView=itemView.findViewById(R.id.imageView8)
+    class ViewHolder (var view: View): RecyclerView.ViewHolder(view){
+        var foto : ImageView
 
-            Glide.with(itemView.context).load(data.listaimagenes).into(img)
+        init {
+            this.foto=view.findViewById(R.id.imageViewseleccion)
         }
-    }
+
+        }
 }
