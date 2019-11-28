@@ -7,16 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_principal.*
+import kotlinx.android.synthetic.main.content_item.*
 import kotlin.collections.ArrayList
 
 class activity_principal : AppCompatActivity() {
 
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    val imgagenes=ArrayList<image>()
+
 
     val mutableList: MutableList<String> = mutableListOf(AppConstants.fileUri.toString())
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,16 +37,21 @@ class activity_principal : AppCompatActivity() {
             selectImageInAlbum()
         }
         //---------FULL SCREEN-------------------
-        LinearLayout.setOnClickListener{ val Intent1 = Intent(this, content_Activity::class.java)
-            startActivity(Intent1)
-        }//comming soon
+        //comming soon
         recycleView.setOnClickListener{ val Intent1 = Intent(this, content_Activity::class.java)
             startActivity(Intent1)
         }
         val recyclerView :RecyclerView=findViewById(R.id.recycleView)
-        layoutManager=LinearLayoutManager(this)
+        layoutManager=GridLayoutManager(this, 3)
 
-        val adapter=Adapteriamge(this, imgagenes)
+        val adapter=Adapteriamge(this, AppConstants.imgagenes, object: ClickListener{
+            override fun onClick(view: View, index: Int) {
+                AppConstants.pos=index
+                val intent=Intent(this@activity_principal,content_Activity::class.java)
+                startActivity(intent)
+                //Toast.makeText(applicationContext,"image",Toast.LENGTH_SHORT).show()
+            }
+        })
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager=layoutManager
         recyclerView.adapter=adapter
@@ -74,7 +83,9 @@ class activity_principal : AppCompatActivity() {
             //photo from gallery
             //FILEURI ES UNA VARIABLE TIPO URI EN LA CUAL SE ALMACENA EL URL DE LA IMAGEN ADQUIRIDA
             AppConstants.fileUri = data?.data
+
             mutableList.add(AppConstants.fileUri.toString())
+            AppConstants.file.add(AppConstants.fileUri)
             //--------------------------------------------------------------------
             //------USE RECYCLE VIEW IN ACTIVITY PRINCIPAL-----------------------
             //-------------------------------------------------------------------
@@ -83,7 +94,7 @@ class activity_principal : AppCompatActivity() {
             //EN DARLE SU DIRECCION Y ALINEAMIENTO
             /////////recyclerView.layoutManager=LinearLayoutManager(this, android.widget.LinearLayout.VERTICAL,false)
 
-            imgagenes.add(image(AppConstants.fileUri))
+            AppConstants.imgagenes.add(image(AppConstants.fileUri))
             //imgagenes.add(image(R.drawable.administration))
 
             //imgagenes.add(image(R.drawable.fnd))
