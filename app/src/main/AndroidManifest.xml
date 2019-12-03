@@ -12,7 +12,9 @@
         android:roundIcon="@drawable/administration"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".content_Activity"></activity>
+        <activity android:name=".Register_Activity"></activity>
+        <activity android:name=".Login_Activity" />
+        <activity android:name=".content_Activity" />
         <activity android:name=".activity_principal" />
         <activity android:name=".MainActivity">
             <intent-filter>

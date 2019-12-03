@@ -6,27 +6,42 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
+import android.text.TextUtils
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_principal.*
-import kotlinx.android.synthetic.main.content_item.*
-import kotlin.collections.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class activity_principal : AppCompatActivity() {
 
     private lateinit var layoutManager: RecyclerView.LayoutManager
-
+    var storage: FirebaseStorage?=null
+    var firestore:FirebaseFirestore?=null
+    private lateinit var database: FirebaseDatabase
+    var auth : FirebaseAuth?=null
 
     val mutableList: MutableList<String> = mutableListOf(AppConstants.fileUri.toString())
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
+
+        /*
+        inicializar las variables de almacenamiento
+        de FiREBASE
+         */
+        storage = FirebaseStorage.getInstance()
+        //firestore= FirebaseFirestore.getInstance()
+
+
+
         //-----CLICK IN LOG OUT----------
         imageView2.setOnClickListener{ val Intento1 =Intent(this, MainActivity::class.java)
             this.finish()
@@ -69,10 +84,6 @@ class activity_principal : AppCompatActivity() {
         //la cual esta dentro de AppConstants(KOTLIN OBJECTS)
         startActivityForResult(pickImageIntent, AppConstants.PICK_PHOTO_REQUEST)
     }
-    //PARA EL SEGUNDO PARCIAL SE IMPLEMENTARA LA FUNCION TOMAR FOTO
-    //---------------------------------------------------------------------
-    //--------------------------------------------------------------------
-
     //FUNCION SOBRE CARGADA PARA EVALUAR EL RESULTADO
     //SI SE HA SELECCIONADO TOMAR FOTO O ELEGIRLA DE LA GALERIA
     override fun onActivityResult(requestCode: Int, resultCode: Int,
@@ -87,12 +98,9 @@ class activity_principal : AppCompatActivity() {
             mutableList.add(AppConstants.fileUri.toString())
             AppConstants.file.add(AppConstants.fileUri)
             //--------------------------------------------------------------------
-            //------USE RECYCLE VIEW IN ACTIVITY PRINCIPAL-----------------------
+            //------SIBIR LA IMAGEN-----------------------
             //-------------------------------------------------------------------
-
-            //EL  SIGUIENTE ERROR SE ORINA EN EL MOMENTO DE ARREGLAR EL RECICLE LAYOUT
-            //EN DARLE SU DIRECCION Y ALINEAMIENTO
-            /////////recyclerView.layoutManager=LinearLayoutManager(this, android.widget.LinearLayout.VERTICAL,false)
+            uploadImage()
 
             AppConstants.imgagenes.add(image(AppConstants.fileUri))
             //imgagenes.add(image(R.drawable.administration))
@@ -107,4 +115,46 @@ class activity_principal : AppCompatActivity() {
         }
 
     }
+
+    private fun insertInDataBase(){
+
+        val file:String=AppConstants.fileUri.toString()
+
+        if(!TextUtils.isEmpty(file)){
+
+        }
+
+    }
+
+    private fun uploadImage(){
+        /*
+        crear nombre del archivo con fecha de subida
+         */
+        val timestamp= SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imagename= "IMAGE_"+ timestamp + "_.png"
+        val storage=storage?.reference?.child("images")?.child(imagename)
+
+        storage?.putFile(AppConstants.fileUri!!)?.continueWithTask{task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
+            return@continueWithTask storage.downloadUrl
+        }?.addOnSuccessListener { uri ->
+            val contentDTO=ContentDTO()
+
+            //downloadURL to image
+            contentDTO.imageUrl=uri.toString()
+
+            //insertar el UID
+            contentDTO.uid=auth?.currentUser?.uid
+
+            //insertarr userID
+            contentDTO.userId=auth?.currentUser?.email
+
+            //tiempo de subida
+            contentDTO.timestamp=System.currentTimeMillis()
+            firestore?.collection("images")?.document()?.set(contentDTO)
+            setResult(Activity.RESULT_OK)
+        }
+    }
+
+
+
 }

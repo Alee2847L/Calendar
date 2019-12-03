@@ -15,6 +15,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        textuserLogin.setText(AppConstants.userEmail)
+
+        info.setOnClickListener{
+            startActivity(Intent(this, Login_Activity::class.java))
+            this.finish()
+
+        }
+
+
+
         //VARIABLES PARA INICIALIZAR EL CALENDARIO EN LA FECHA DEL SISTEMA
         val calendar= Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)

@@ -9,4 +9,5 @@ object AppConstants {
     var file:MutableList<Uri?> = mutableListOf(fileUri)
     var pos : Int = 0
     val imgagenes=ArrayList<image>()
+    var userEmail:String="Free Acount"
 }

@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Adapteriamge(var context:Context, var list: ArrayList<image>, var clickListener: ClickListener) : RecyclerView.Adapter<Adapteriamge.ViewHolder>(){
+
     override fun getItemCount(): Int {
         return list.count()
     }

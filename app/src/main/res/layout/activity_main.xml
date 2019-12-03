@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.336" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/info"
         android:layout_width="44dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
@@ -93,6 +93,17 @@
         app:layout_constraintBottom_toTopOf="@+id/editText2"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:id="@+id/textuserLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Free Acount"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/dateTv"
+        app:layout_constraintStart_toEndOf="@+id/info"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
